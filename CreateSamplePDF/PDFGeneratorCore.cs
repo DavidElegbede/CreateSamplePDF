@@ -39,14 +39,14 @@ namespace CreateSamplePDF
         {
             try
             {
+                //===============================Declare file Path, Name of file, font and colours=========================================================
                 string pdfPathFolder = "C:/PdfFolder";
                 if (!Directory.Exists(pdfPathFolder))
                 {
                     Directory.CreateDirectory(pdfPathFolder);
                 }
-                string fileName = "MyFile" + DateTime.Now.ToString("ddMMMMyyyyHHmmssfffff") + ".pdf";
+                string fileName = "MyStatement" + DateTime.Now.ToString("ddMMMMyyyyHHmmssfffff") + ".pdf";
                 string fullFilePath = System.IO.Path.Combine(pdfPathFolder, fileName);
-
                 PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA, PdfEncodings.CP1252, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
                 DeviceRgb purpleColour = new(128, 0, 128);
                 DeviceRgb offPurpleColour = new(230, 230, 250);
@@ -57,8 +57,7 @@ namespace CreateSamplePDF
 
                 //width is 595 height is 842
 
-
-                //Set Headers and footers
+                //===============================Set headers footers using PDFEventHandlers=========================================================
                 pdfDocument.AddEventHandler(PdfDocumentEvent.START_PAGE, new PDFHeaderEventHandler());
                 PDFFooterEventHandler currentEvent = new();
                 pdfDocument.AddEventHandler(PdfDocumentEvent.END_PAGE, currentEvent);
@@ -100,7 +99,7 @@ namespace CreateSamplePDF
                     AddCell(new Cell().Add(new Paragraph("£4000.00")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER))).SetBorder(Border.NO_BORDER)
                     .SetBorderBottom(new SolidBorder(purpleColour, 1F)));
 
-                //=========================================================== This sets the infoTable and customerAddTable side by side ========================================
+                //=========================================================== This merges Address table and Summary Table ========================================
                 Table addressSummaryMergeTable = new Table(new float[] { 385F, 30F, 130F }).SetFont(font);
                 addressSummaryMergeTable.AddCell(new Cell().Add(addressTable).SetBorder(Border.NO_BORDER).SetHorizontalAlignment(HorizontalAlignment.LEFT));
                 addressSummaryMergeTable.AddCell(new Cell().Add(new Paragraph("")).SetBorder(Border.NO_BORDER));
@@ -119,14 +118,13 @@ namespace CreateSamplePDF
                     .SetBorderTopLeftRadius(new BorderRadius(10F)).SetBorderTopRightRadius(new BorderRadius(10F)));
                 noticeBoard.AddCell(new Cell().Add(new Paragraph("Your deposit is eligible for protection by the Financial Services Compensation Scheme")).SetBorder(Border.NO_BORDER));
 
+                //=========================================================== Merges Header and NoticeBoard =========================================================
                 Table summNoticeBoardMerge = new Table(new float[] { 385F, 30F, 130F }).SetFont(font).SetMarginTop(10F);
                 summNoticeBoardMerge.AddCell(new Cell().Add(headerTable).SetBorder(Border.NO_BORDER).SetHorizontalAlignment(HorizontalAlignment.LEFT));
                 summNoticeBoardMerge.AddCell(new Cell().Add(new Paragraph("")).SetBorder(Border.NO_BORDER));
                 summNoticeBoardMerge.AddCell(new Cell().Add(noticeBoard).SetBorder(Border.NO_BORDER).SetHorizontalAlignment(HorizontalAlignment.RIGHT));
 
                 document.Add(summNoticeBoardMerge);
-
-
 
                 //=========================================================== transactionsTable =========================================================
                 Table transactionsTable = new Table(new float[] { 80, 110, 70, 70, 70 }).SetFont(font).SetFontSize(10F).SetFontColor(ColorConstants.BLACK).SetBorder(Border.NO_BORDER).SetMarginTop(10);
@@ -138,7 +136,6 @@ namespace CreateSamplePDF
                 transactionsTable.AddCell(new Cell().Add(new Paragraph("Money out")).SetBorder(Border.NO_BORDER).SetFontSize(11F).SetBorderBottom(new SolidBorder(purpleColour, 0.5F)).SetBorderRight(new SolidBorder(ColorConstants.WHITE, 0.5F)).SetFontColor(purpleColour).SetTextAlignment(TextAlignment.RIGHT));
                 transactionsTable.AddCell(new Cell().Add(new Paragraph("Money In")).SetBorder(Border.NO_BORDER).SetFontSize(11F).SetBorderBottom(new SolidBorder(purpleColour, 0.5F)).SetBorderRight(new SolidBorder(ColorConstants.WHITE, 0.5F)).SetFontColor(purpleColour).SetTextAlignment(TextAlignment.RIGHT));
                 transactionsTable.AddCell(new Cell().Add(new Paragraph("Balance")).SetBorder(Border.NO_BORDER).SetFontSize(11F).SetBorderBottom(new SolidBorder(purpleColour, 0.5F)).SetBorderRight(new SolidBorder(ColorConstants.WHITE, 0.5F)).SetFontColor(purpleColour).SetTextAlignment(TextAlignment.RIGHT));
-
                 transactionsTable.AddCell(new Cell().Add(new Paragraph("14 Dec")).SetBorder(Border.NO_BORDER).SetBorderBottom(new SolidBorder(purpleColour, 0.5F)).SetBorderRight(new SolidBorder(ColorConstants.WHITE, 0.5F)).SetFontColor(purpleColour).SetBackgroundColor(offPurpleColour));
                 transactionsTable.AddCell(new Cell().Add(new Paragraph("Start balance")).SetBorder(Border.NO_BORDER).SetBorderBottom(new SolidBorder(purpleColour, 0.5F)).SetBorderRight(new SolidBorder(ColorConstants.WHITE, 0.5F)).SetFontColor(purpleColour).SetBackgroundColor(offPurpleColour));
                 transactionsTable.AddCell(new Cell().Add(new Paragraph(" ")).SetBorder(Border.NO_BORDER).SetBorderBottom(new SolidBorder(purpleColour, 0.5F)).SetBorderRight(new SolidBorder(ColorConstants.WHITE, 0.5F)).SetFontColor(purpleColour).SetBackgroundColor(offPurpleColour));
@@ -161,7 +158,6 @@ namespace CreateSamplePDF
                         .SetBorder(new SolidBorder(ColorConstants.WHITE, 1F)).SetFontColor(ColorConstants.BLACK).SetTextAlignment(TextAlignment.RIGHT));
                     backgroundCounter++;
                 }
-
                 transactionsTable.AddCell(new Cell().Add(new Paragraph("13 Jan")).SetBorder(Border.NO_BORDER).SetBorderBottom(new SolidBorder(purpleColour, 0.5F)).SetBorderRight(new SolidBorder(ColorConstants.WHITE, 0.5F)).SetFontColor(purpleColour).SetBackgroundColor(offPurpleColour));
                 transactionsTable.AddCell(new Cell().Add(new Paragraph("End balance")).SetBorder(Border.NO_BORDER).SetBorderBottom(new SolidBorder(purpleColour, 0.5F)).SetBorderRight(new SolidBorder(ColorConstants.WHITE, 0.5F)).SetFontColor(purpleColour).SetBackgroundColor(offPurpleColour));
                 transactionsTable.AddCell(new Cell().Add(new Paragraph(" ")).SetBorder(Border.NO_BORDER).SetBorderBottom(new SolidBorder(purpleColour, 0.5F)).SetBorderRight(new SolidBorder(ColorConstants.WHITE, 0.5F)).SetFontColor(purpleColour).SetBackgroundColor(offPurpleColour));
@@ -169,6 +165,7 @@ namespace CreateSamplePDF
                 transactionsTable.AddCell(new Cell().Add(new Paragraph("4,000.00")).SetBorder(Border.NO_BORDER).SetBorderBottom(new SolidBorder(purpleColour, 0.5F)).SetBorderRight(new SolidBorder(ColorConstants.WHITE, 0.5F)).SetFontColor(purpleColour).SetBackgroundColor(offPurpleColour).SetTextAlignment(TextAlignment.RIGHT));
 
                 document.Add(transactionsTable);
+                //===============================================Miscelleanous or Question table =====================================================
 
                 Table miscTable = new Table(new float[] { 95F, 305F }).SetFont(font).SetFontSize(10F).SetFontColor(ColorConstants.BLACK).SetBorder(Border.NO_BORDER).SetMarginTop(20).SetKeepTogether(true);
                 miscTable.AddCell(new Cell().Add(new Paragraph("Anything Wrong?").SetFontColor(purpleColour)).SetBorder(Border.NO_BORDER));
@@ -176,7 +173,9 @@ namespace CreateSamplePDF
 
                 document.Add(miscTable);
 
+                //Write the page number
                 currentEvent.WritePageNumbers(pdfDocument, document);
+                //close the document
                 document.Close();
                 return "Sample PDF successfully generated";
             }
@@ -186,7 +185,9 @@ namespace CreateSamplePDF
             }
         }
     }
-
+    /// <summary>
+    /// Call this class to place the logo
+    /// </summary>
     public class PDFHeaderEventHandler : IEventHandler
     {
         public void HandleEvent(Event currentEvent)
@@ -217,11 +218,11 @@ namespace CreateSamplePDF
             {
                 throw;
             }
-
-
         }
     }
-
+    /// <summary>
+    /// PDF Footer EventHandler to handle the footers on all pages
+    /// </summary>
     public class PDFFooterEventHandler : IEventHandler
     {
         public void HandleEvent(Event currentEvent)
@@ -263,6 +264,11 @@ namespace CreateSamplePDF
             }
 
         }
+        /// <summary>
+        /// Call this method Write the page numbers
+        /// </summary>
+        /// <param name="pdf"> pdfDocument</param>
+        /// <param name="document">Document</param>
         public void WritePageNumbers(PdfDocument pdf, Document document)
         {
             PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA, PdfEncodings.CP1252, PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED);
