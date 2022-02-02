@@ -20,14 +20,14 @@ namespace CreateSamplePDF
         private readonly List<TransactionDetails> _transactionDetails = new()
         {
             new TransactionDetails() { TransactionDate = "14/12/2021", Remarks = "payment from Dave", MoneyIn = "20.00", MoneyOut = "", Balance = "2,020.00" },
-            new TransactionDetails() { TransactionDate = "16/12/2021", Remarks = "Purchase Groceries from Aldi", MoneyIn = "", MoneyOut = "30.00", Balance = "1,090.00" },
-            new TransactionDetails() { TransactionDate = "18/12/2021", Remarks = "Purchase Groceries from Pasteries shop", MoneyIn = "", MoneyOut = "20.00", Balance = "2,010.00" },
-            new TransactionDetails() { TransactionDate = "20/12/2021", Remarks = "Purchase Groceries from TK Mx", MoneyIn = "", MoneyOut = "30.00", Balance = "1,980.00" },
-            new TransactionDetails() { TransactionDate = "24/12/2021", Remarks = "Payment for Water Corp", MoneyIn = "", MoneyOut = "40.00", Balance = "1,940.00" },
-            new TransactionDetails() { TransactionDate = "26/12/2021", Remarks = "Salary from Meta", MoneyIn = "1,000.00", MoneyOut = "", Balance = "2,940.00" },
-            new TransactionDetails() { TransactionDate = "01/01/2022", Remarks = "Gym Subscription", MoneyIn = "", MoneyOut = "100.00", Balance = "2,840.00" },
-            new TransactionDetails() { TransactionDate = "05/01/2022", Remarks = "JD purchases", MoneyIn = "", MoneyOut = "500.00", Balance = "2,340.00" },
-            new TransactionDetails() { TransactionDate = "10/01/2022", Remarks = "Payment from Bukayo", MoneyIn = "1,660.00", MoneyOut = "", Balance = "4,000.00" },
+            new TransactionDetails() { TransactionDate = "16/12/2021", Remarks = "Purchase Groceries from Aldi", MoneyIn = "", MoneyOut = "30.00", Balance = "1,990.00" },
+            new TransactionDetails() { TransactionDate = "18/12/2021", Remarks = "Purchase Groceries from Pasteries shop", MoneyIn = "", MoneyOut = "20.00", Balance = "1,970.00" },
+            new TransactionDetails() { TransactionDate = "20/12/2021", Remarks = "Purchase Groceries from TK Mx", MoneyIn = "", MoneyOut = "30.00", Balance = "1,940.00" },
+            new TransactionDetails() { TransactionDate = "24/12/2021", Remarks = "Payment for Water Corp", MoneyIn = "", MoneyOut = "40.00", Balance = "1,900.00" },
+            new TransactionDetails() { TransactionDate = "26/12/2021", Remarks = "Salary from Meta", MoneyIn = "1,000.00", MoneyOut = "", Balance = "2,900.00" },
+            new TransactionDetails() { TransactionDate = "01/01/2022", Remarks = "Gym Subscription", MoneyIn = "", MoneyOut = "100.00", Balance = "2,800.00" },
+            new TransactionDetails() { TransactionDate = "05/01/2022", Remarks = "JD purchases", MoneyIn = "", MoneyOut = "500.00", Balance = "2,300.00" },
+            new TransactionDetails() { TransactionDate = "10/01/2022", Remarks = "Payment from Bukayo", MoneyIn = "1,700.00", MoneyOut = "", Balance = "4,000.00" },
         };
         public PDFGeneratorCore(ILogger<PDFGeneratorCore> logger)
         {
@@ -73,7 +73,7 @@ namespace CreateSamplePDF
 
                 Table summaryTable = new Table(new float[] { 130F }).SetFontSize(8F).SetFontColor(ColorConstants.BLACK).SetFont(font).SetBorder(Border.NO_BORDER);
                 summaryTable.AddCell(new Cell().Add(new Paragraph("Goodman Bank Account")).SetBorder(Border.NO_BORDER).SetFontColor(purpleColour).SetFontSize(14F));
-                summaryTable.AddCell(new Cell().Add(new Paragraph("14 Dec 1994 - 13 Jan 1995")).SetBorder(Border.NO_BORDER));
+                summaryTable.AddCell(new Cell().Add(new Paragraph("14 Dec 2021 - 13 Jan 2022")).SetBorder(Border.NO_BORDER));
                 summaryTable.AddCell(new Cell().Add(new Paragraph("Mr John Doe")).SetBorder(Border.NO_BORDER));
 
                 List summaryBullets = new();
@@ -90,7 +90,7 @@ namespace CreateSamplePDF
                     AddCell(new Cell().Add(new Paragraph("£2000.00")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER))).SetBorder(Border.NO_BORDER)
                     .SetBorderBottom(new SolidBorder(purpleColour, 1F)));
                 summaryTable.AddCell(new Cell().Add(new Table(new float[] { 65f, 65f }).AddCell(new Cell().Add(new Paragraph("Money In")).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER)).
-                    AddCell(new Cell().Add(new Paragraph("£2680.00")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER))).SetBorder(Border.NO_BORDER)
+                    AddCell(new Cell().Add(new Paragraph("£2720.00")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER))).SetBorder(Border.NO_BORDER)
                     .SetBorderBottom(new SolidBorder(purpleColour, 1F)));
                 summaryTable.AddCell(new Cell().Add(new Table(new float[] { 65f, 65f }).AddCell(new Cell().Add(new Paragraph("Money out")).SetTextAlignment(TextAlignment.LEFT).SetBorder(Border.NO_BORDER)).
                     AddCell(new Cell().Add(new Paragraph("£720.00")).SetTextAlignment(TextAlignment.RIGHT).SetBorder(Border.NO_BORDER))).SetBorder(Border.NO_BORDER)
